@@ -292,10 +292,10 @@ def create_visual_presentation():
     slide7 = prs.slides.add_slide(blank_layout)
     setup_slide(slide7, "Deep LSTM World Model Architecture")
 
-    img7 = str(ASSETS_DIR / "chart_world_model.png")
-    slide7.shapes.add_picture(img7, Inches(1.6), Inches(1.85), width=Inches(10.1))
+    img7 = str(V2_DIR / "diag_world_model.png")
+    slide7.shapes.add_picture(img7, Inches(1.4), Inches(1.85), width=Inches(10.5))
 
-    callout7 = slide7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.6), Inches(6.15), Inches(10.1), Inches(0.95))
+    callout7 = slide7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.4), Inches(6.15), Inches(10.5), Inches(0.95))
     callout7.fill.solid()
     callout7.fill.fore_color.rgb = C_CARD_BG
     callout7.line.color.rgb = C_BORDER
@@ -443,9 +443,9 @@ def create_visual_presentation():
     setup_slide(slide12, "Interactive SOC Command Dashboard")
 
     img12 = str(ASSETS_DIR / "dashboard_screenshot.png")
-    slide12.shapes.add_picture(img12, Inches(1.2), Inches(1.85), width=Inches(10.933))
+    slide12.shapes.add_picture(img12, Inches(1.4), Inches(1.75), width=Inches(10.5))
 
-    callout12 = slide12.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.2), Inches(6.3), Inches(10.933), Inches(0.8))
+    callout12 = slide12.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.4), Inches(6.20), Inches(10.5), Inches(0.85))
     callout12.fill.solid()
     callout12.fill.fore_color.rgb = C_CARD_BG
     callout12.line.color.rgb = C_BORDER
