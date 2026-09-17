@@ -1,0 +1,293 @@
+{
+  "model": "LSTM World Model (Deep Recurrent Multi-Task)",
+  "training_summary": {
+    "best_epoch": 7,
+    "best_val_loss": 0.6751776138941447,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 1.8678088784217834,
+        "val_loss": 1.7969792286554973
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.9107842147350311,
+        "val_loss": 1.472111999988556
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.7261699866503477,
+        "val_loss": 1.2135240236918132
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.6625579446554184,
+        "val_loss": 0.8084162175655365
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.5728004574775696,
+        "val_loss": 0.7490251859029134
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.6002311306074262,
+        "val_loss": 0.8106781045595804
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.5276474533602595,
+        "val_loss": 0.6751776138941447
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.5266287345439196,
+        "val_loss": 0.8225925167401632
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.46717905160039663,
+        "val_loss": 1.0118030707041423
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.4291319940239191,
+        "val_loss": 0.7926934758822123
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.4535603607073426,
+        "val_loss": 1.6166391372680664
+      },
+      {
+        "epoch": 12,
+        "train_loss": 0.47985480818897486,
+        "val_loss": 1.3063849012056987
+      },
+      {
+        "epoch": 13,
+        "train_loss": 0.3628685064613819,
+        "val_loss": 0.755640427271525
+      },
+      {
+        "epoch": 14,
+        "train_loss": 0.3362497743219137,
+        "val_loss": 1.2910456260045369
+      },
+      {
+        "epoch": 15,
+        "train_loss": 0.31892463099211454,
+        "val_loss": 1.0792157848676045
+      }
+    ]
+  },
+  "multistep_evaluation": {
+    "T+1": {
+      "risk_metrics": {
+        "accuracy": 0.9680851063829787,
+        "precision": 0.967391304347826,
+        "recall": 1.0,
+        "f1_score": 0.9834254143646409,
+        "false_positive_rate": 0.6,
+        "true_positives": 89,
+        "false_positives": 3,
+        "true_negatives": 2,
+        "false_negatives": 0,
+        "confusion_matrix": [
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            89
+          ]
+        ],
+        "roc_auc": 0.7662921348314606
+      },
+      "stage_metrics": {
+        "accuracy": 0.6276595744680851,
+        "macro_f1": 0.5031954887218045,
+        "confusion_matrix": [
+          [
+            1,
+            0,
+            0,
+            0,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            29,
+            3,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            26,
+            0
+          ],
+          [
+            0,
+            0,
+            7,
+            19,
+            3
+          ]
+        ]
+      },
+      "state_metrics": {
+        "mae": 0.8537927865982056,
+        "rmse": 1.2280848100992492
+      }
+    },
+    "T+2": {
+      "risk_metrics": {
+        "accuracy": 0.9574468085106383,
+        "precision": 0.9565217391304348,
+        "recall": 1.0,
+        "f1_score": 0.9777777777777777,
+        "false_positive_rate": 0.6666666666666666,
+        "true_positives": 88,
+        "false_positives": 4,
+        "true_negatives": 2,
+        "false_negatives": 0,
+        "confusion_matrix": [
+          [
+            2,
+            4
+          ],
+          [
+            0,
+            88
+          ]
+        ],
+        "roc_auc": 0.6742424242424243
+      },
+      "stage_metrics": {
+        "accuracy": 0.6170212765957447,
+        "macro_f1": 0.5282849503437739,
+        "confusion_matrix": [
+          [
+            2,
+            0,
+            0,
+            0,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            28,
+            3,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            26,
+            0
+          ],
+          [
+            0,
+            0,
+            7,
+            20,
+            2
+          ]
+        ]
+      },
+      "state_metrics": {
+        "mae": 0.8644772171974182,
+        "rmse": 1.2424804533988643
+      }
+    },
+    "T+3": {
+      "risk_metrics": {
+        "accuracy": 0.9468085106382979,
+        "precision": 0.9456521739130435,
+        "recall": 1.0,
+        "f1_score": 0.9720670391061452,
+        "false_positive_rate": 0.7142857142857143,
+        "true_positives": 87,
+        "false_positives": 5,
+        "true_negatives": 2,
+        "false_negatives": 0,
+        "confusion_matrix": [
+          [
+            2,
+            5
+          ],
+          [
+            0,
+            87
+          ]
+        ],
+        "roc_auc": 0.5582922824302134
+      },
+      "stage_metrics": {
+        "accuracy": 0.6063829787234043,
+        "macro_f1": 0.5031832181085912,
+        "confusion_matrix": [
+          [
+            2,
+            0,
+            0,
+            0,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            28,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            26,
+            0
+          ],
+          [
+            0,
+            0,
+            7,
+            21,
+            1
+          ]
+        ]
+      },
+      "state_metrics": {
+        "mae": 0.881964921951294,
+        "rmse": 1.2633022610928808
+      }
+    }
+  }
+}

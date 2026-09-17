@@ -51,9 +51,9 @@ lstm_world_model:
   training:
     epochs: 25
     batch_size: 32
-    learning_rate: 0.001
+    learning_rate: 0.002
     weight_decay: 1e-4
-    early_stopping_patience: 5
+    early_stopping_patience: 8
     checkpoint_path: "models/checkpoints/lstm_world_model.pt"
     best_model_path: "models/checkpoints/best_lstm_world_model.pt"
     scaler_save_path: "models/scalers/lstm_state_scaler.joblib"
@@ -62,7 +62,7 @@ lstm_world_model:
   loss_weights:
     risk_loss_weight: 1.0    # Binary Cross Entropy
     stage_loss_weight: 1.0   # Cross Entropy
-    state_loss_weight: 0.5   # Mean Squared Error
+    state_loss_weight: 0.2   # Mean Squared Error
 
 taxonomy:
   stages:

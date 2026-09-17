@@ -19,33 +19,33 @@
     "udp_ratio"
   ],
   "metrics": {
-    "accuracy": 0.9787234042553191,
-    "precision": 1.0,
-    "recall": 0.9787234042553191,
-    "f1_score": 0.989247311827957,
-    "false_positive_rate": 0.0,
-    "true_positives": 92,
-    "false_positives": 0,
-    "true_negatives": 0,
+    "accuracy": 0.9680851063829787,
+    "precision": 0.9886363636363636,
+    "recall": 0.9775280898876404,
+    "f1_score": 0.9830508474576272,
+    "false_positive_rate": 0.2,
+    "true_positives": 87,
+    "false_positives": 1,
+    "true_negatives": 4,
     "false_negatives": 2,
     "confusion_matrix": [
       [
-        0,
-        0
+        4,
+        1
       ],
       [
         2,
-        92
+        87
       ]
     ],
-    "roc_auc": null
+    "roc_auc": 0.950561797752809
   },
   "top_features": {
-    "iat_mean": -1.4871923923492432,
-    "bwd_pkt_len_mean": -1.1903828382492065,
-    "duration_mean": -0.7467931509017944,
-    "syn_ratio": 0.5733134150505066,
-    "rst_ratio": 0.5191928744316101
+    "ack_ratio": -1.0088051557540894,
+    "packet_rate": 0.8514360785484314,
+    "total_packets": 0.8514357209205627,
+    "duration_mean": -0.585067093372345,
+    "fin_ratio": 0.5454980731010437
   },
   "test_samples": 94
 }

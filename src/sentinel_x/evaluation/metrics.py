@@ -33,7 +33,10 @@ def compute_risk_metrics(
     """
     y_true = np.asarray(y_true, dtype=int).ravel()
     
-    if y_probs is None and np.issubdtype(np.asarray(y_pred).dtype, np.floating):
+    if y_probs is not None:
+        y_probs = np.asarray(y_probs, dtype=float).ravel()
+        y_pred = (y_probs >= threshold).astype(int)
+    elif np.issubdtype(np.asarray(y_pred).dtype, np.floating):
         y_probs = np.asarray(y_pred, dtype=float).ravel()
         y_pred = (y_probs >= threshold).astype(int)
     else:
