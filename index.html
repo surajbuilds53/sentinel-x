@@ -121,8 +121,12 @@
       <p>Temporal network-state vectors, leak-free chronological splitting (70/15/15), rolling windows (T-11..T &rarr; T+1, T+2, T+3), and synthetic demo generator.</p>
     </div>
     <div class="card">
-      <h3>Phase 3 &bull; Baseline Model <span class="status-tag tag-active">READY FOR NEXT STEP</span></h3>
-      <p>StandardScaler &rarr; Logistic Regression static baseline with Precision, Recall, F1, and FPR benchmarking.</p>
+      <h3>Phase 3 &bull; Baseline Model <span class="status-tag tag-complete">&check; PASSED</span></h3>
+      <p>StandardScaler &rarr; Logistic Regression static baseline trained. Precision: 1.000, Recall: 0.979, F1: 0.989, FPR: 0.000.</p>
+    </div>
+    <div class="card">
+      <h3>Phase 4 &bull; LSTM World Model <span class="status-tag tag-active">READY FOR NEXT STEP</span></h3>
+      <p>2-Layer LSTM with 3 Forecasting Heads (Risk, Attack Stage, Network State) and Autoregressive T+1..T+3 rollout.</p>
     </div>
   </div>
 
