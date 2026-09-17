@@ -1,7 +1,34 @@
-node_modules/
-.vercel/
-.env*
-!.env.example
-.DS_Store
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# Python cache & build
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
 dist/
 build/
+.pytest_cache/
+
+# System & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Vercel & Node
+node_modules/
+.vercel/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Large raw datasets (raw CSVs should not be committed to Git)
+data/raw/*.csv
+data/processed/*.parquet
+data/processed/*.pt

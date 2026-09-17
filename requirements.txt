@@ -1,0 +1,19 @@
+# Sentinel-X: AI-Based Network Attack Forecasting from Network Traffic Data
+# Core dependencies
+pandas>=2.2.0
+numpy>=1.26.0
+PyYAML>=6.0
+
+# Machine Learning & Deep Learning
+scikit-learn>=1.4.0
+torch>=2.4.0
+
+# Explainability
+shap>=0.45.0
+
+# SOC Dashboard & Visualization
+streamlit>=1.35.0
+plotly>=5.20.0
+
+# Testing & Quality
+pytest>=8.0.0

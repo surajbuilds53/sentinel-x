@@ -3,27 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentinel-X</title>
+  <title>Sentinel-X | AI Network Attack Forecasting</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       background: #090d16;
       color: #f3f4f6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       min-height: 100vh;
-      padding: 1rem;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .card {
-      background: #111827;
-      border: 1px solid #1f2937;
-      border-radius: 16px;
-      padding: 2.5rem;
-      max-width: 480px;
+    .header {
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      max-width: 800px;
+      margin-bottom: 2rem;
     }
     .badge {
       display: inline-block;
@@ -31,32 +27,131 @@
       color: #38bdf8;
       font-size: 0.8rem;
       font-weight: 600;
-      padding: 4px 12px;
+      padding: 6px 14px;
       border-radius: 9999px;
       margin-bottom: 1rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      border: 1px solid rgba(56, 189, 248, 0.3);
     }
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
+      font-weight: 800;
       margin-bottom: 0.75rem;
       letter-spacing: -0.025em;
       background: linear-gradient(135deg, #38bdf8, #818cf8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    p {
+    .subtitle {
       color: #9ca3af;
+      font-size: 1.1rem;
       line-height: 1.6;
-      font-size: 0.95rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 1000px;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      color: #f3f4f6;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card p {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .status-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .tag-complete { background: #064e3b; color: #34d399; }
+    .tag-active { background: #78350f; color: #fbbf24; }
+    .stage-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #1f2937;
+      font-size: 0.85rem;
+    }
+    .footer {
+      color: #6b7280;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: auto;
+      padding-top: 2rem;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <span class="badge">Connected</span>
+  <div class="header">
+    <span class="badge">B.Tech Defensive Cybersecurity Minor Project &bull; SIH26153</span>
     <h1>Sentinel-X</h1>
-    <p>Repository and Vercel pipeline connected successfully. Ready for development.</p>
+    <p class="subtitle">AI-Based Network Attack Forecasting from Network Traffic Data</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Phase 0 &bull; Environment <span class="status-tag tag-complete">&check; PASSED</span></h3>
+      <p>Python 3.13 isolated runtime, PyTorch DL engine, Scikit-learn, Streamlit, SHAP, and hardware acceleration audit.</p>
+    </div>
+    <div class="card">
+      <h3>Phase 1 &bull; Architecture <span class="status-tag tag-complete">&check; PASSED</span></h3>
+      <p>Modular skeleton, centralized non-hardcoded <code>config.yaml</code>, test runner, and seed reproducibility manager.</p>
+    </div>
+    <div class="card">
+      <h3>Phase 2 &bull; Data Pipeline <span class="status-tag tag-complete">&check; PASSED</span></h3>
+      <p>Temporal network-state vectors, leak-free chronological splitting (70/15/15), rolling windows (T-11..T &rarr; T+1, T+2, T+3), and synthetic demo generator.</p>
+    </div>
+    <div class="card">
+      <h3>Phase 3 &bull; Baseline Model <span class="status-tag tag-active">READY FOR NEXT STEP</span></h3>
+      <p>StandardScaler &rarr; Logistic Regression static baseline with Precision, Recall, F1, and FPR benchmarking.</p>
+    </div>
+  </div>
+
+  <div class="card" style="max-width: 1000px; width: 100%; margin-bottom: 2rem;">
+    <h3 style="margin-bottom: 1rem;">MITRE ATT&CK Conservative Behavioral Stage Taxonomy</h3>
+    <div class="stage-item">
+      <span><strong>Stage 0: Benign</strong></span>
+      <span style="color: #10b981;">Normal baseline activity</span>
+    </div>
+    <div class="stage-item">
+      <span><strong>Stage 1: Reconnaissance</strong> (TA0043)</span>
+      <span style="color: #f59e0b;">Host scanning &amp; port probing</span>
+    </div>
+    <div class="stage-item">
+      <span><strong>Stage 2: Initial Access</strong> (TA0001)</span>
+      <span style="color: #f97316;">Perimeter breach &amp; brute-force attempts</span>
+    </div>
+    <div class="stage-item">
+      <span><strong>Stage 3: Lateral Movement</strong> (TA0008)</span>
+      <span style="color: #ef4444;">Internal network segment navigation</span>
+    </div>
+    <div class="stage-item" style="border-bottom: none;">
+      <span><strong>Stage 4: Command &amp; Control</strong> (TA0011)</span>
+      <span style="color: #8b5cf6;">Outbound beaconing channels</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    Sentinel-X &bull; Academic Defensive Cybersecurity Project &bull; Connected to GitHub &amp; Vercel CI/CD
   </div>
 </body>
 </html>

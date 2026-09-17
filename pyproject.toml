@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sentinel-x"
+version = "1.0.0"
+description = "AI-Based Network Attack Forecasting from Network Traffic Data (SIH26153)"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Suraj Upadhyay", email = "unstoppablesuraj@gmail.com" }
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
