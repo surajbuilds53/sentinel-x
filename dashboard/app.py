@@ -5,22 +5,38 @@ Streamlit application integrating Executive Risk, Autoregressive Forecast Timeli
 Threat Attribution (SHAP), Model Performance, and System Diagnostics.
 """
 
+import sys
 from pathlib import Path
+
+# Ensure project root is at the beginning of sys.path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 import json
 import numpy as np
 import pandas as pd
 import streamlit as st
 import torch
 
-from sentinel_x.config import PROJECT_ROOT, load_config, get_device
+from sentinel_x.config import load_config, get_device
 from sentinel_x.models.lstm_world_model import LSTMWorldModel
 from sentinel_x.data.aggregation import FEATURE_NAMES
-from dashboard.components.header import render_header
-from dashboard.components.executive_view import render_executive_view
-from dashboard.components.timeline_view import render_timeline_view
-from dashboard.components.attribution_view import render_attribution_view
-from dashboard.components.performance_view import render_performance_view
-from dashboard.components.system_view import render_system_view
+
+try:
+    from dashboard.components.header import render_header
+    from dashboard.components.executive_view import render_executive_view
+    from dashboard.components.timeline_view import render_timeline_view
+    from dashboard.components.attribution_view import render_attribution_view
+    from dashboard.components.performance_view import render_performance_view
+    from dashboard.components.system_view import render_system_view
+except ImportError:
+    from components.header import render_header
+    from components.executive_view import render_executive_view
+    from components.timeline_view import render_timeline_view
+    from components.attribution_view import render_attribution_view
+    from components.performance_view import render_performance_view
+    from components.system_view import render_system_view
 
 # Page Config
 st.set_page_config(
