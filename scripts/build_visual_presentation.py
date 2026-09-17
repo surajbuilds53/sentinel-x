@@ -37,18 +37,18 @@ def setup_slide(slide, title_text, bg_path=None):
         bg_path = str(ASSETS_DIR / "master_slide_bg.png")
     slide.shapes.add_picture(bg_path, 0, 0, width=Inches(13.333), height=Inches(7.5))
 
-    title_box = slide.shapes.add_textbox(Inches(1.0), Inches(1.15), Inches(11.333), Inches(0.65))
+    title_box = slide.shapes.add_textbox(Inches(1.5), Inches(1.05), Inches(10.333), Inches(0.60))
     tf = title_box.text_frame
     tf.word_wrap = True
     p = tf.paragraphs[0]
     p.text = title_text
     p.font.name = "Georgia"
-    p.font.size = Pt(25)
+    p.font.size = Pt(24)
     p.font.bold = True
     p.font.color.rgb = C_NAVY
     p.alignment = PP_ALIGN.CENTER
 
-    line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4.666), Inches(1.80), Inches(4.0), Inches(0.04))
+    line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(4.8), Inches(1.68), Inches(3.733), Inches(0.035))
     line.fill.solid()
     line.fill.fore_color.rgb = C_ROYAL
     line.line.fill.background()
@@ -169,11 +169,11 @@ def build_presentation():
     setup_slide(slide2, "Project Content")
 
     # Left Table: Foundations & Modeling (Modules 1-7)
-    t1_shape = slide2.shapes.add_table(8, 3, Inches(1.1), Inches(1.95), Inches(5.4), Inches(4.35))
+    t1_shape = slide2.shapes.add_table(8, 3, Inches(1.2), Inches(2.15), Inches(5.3), Inches(4.15))
     t1 = t1_shape.table
     t1.columns[0].width = Inches(0.7)
-    t1.columns[1].width = Inches(2.1)
-    t1.columns[2].width = Inches(2.6)
+    t1.columns[1].width = Inches(2.05)
+    t1.columns[2].width = Inches(2.55)
 
     headers1 = ["S.No.", "Content Module", "Key Focus / Deliverable"]
     for j, h in enumerate(headers1):
@@ -195,11 +195,11 @@ def build_presentation():
         style_cell(t1.cell(i+1, 2), foc, font_size=8.2, text_color=C_BODY, bg_color=bg)
 
     # Right Table: Rollout, Defense, Evaluation & References (Modules 8-14)
-    t2_shape = slide2.shapes.add_table(8, 3, Inches(6.8), Inches(1.95), Inches(5.4), Inches(4.35))
+    t2_shape = slide2.shapes.add_table(8, 3, Inches(6.833), Inches(2.15), Inches(5.3), Inches(4.15))
     t2 = t2_shape.table
     t2.columns[0].width = Inches(0.7)
-    t2.columns[1].width = Inches(2.1)
-    t2.columns[2].width = Inches(2.6)
+    t2.columns[1].width = Inches(2.05)
+    t2.columns[2].width = Inches(2.55)
 
     for j, h in enumerate(headers1):
         style_cell(t2.cell(0, j), h, font_size=9.5, bold=True, text_color=C_WHITE, bg_color=C_NAVY, align=PP_ALIGN.CENTER if j == 0 else PP_ALIGN.LEFT)
@@ -220,7 +220,7 @@ def build_presentation():
         style_cell(t2.cell(i+1, 2), foc, font_size=8.2, text_color=C_BODY, bg_color=bg)
 
     # Clean unboxed footnote text
-    tbox2 = slide2.shapes.add_textbox(Inches(1.1), Inches(6.45), Inches(11.1), Inches(0.5))
+    tbox2 = slide2.shapes.add_textbox(Inches(1.2), Inches(6.45), Inches(10.933), Inches(0.50))
     tf2 = tbox2.text_frame
     tf2.word_wrap = True
     p = tf2.paragraphs[0]
@@ -261,13 +261,13 @@ def build_presentation():
     slide4 = prs.slides.add_slide(blank_layout)
     setup_slide(slide4, "Literature Review: Comparative Analysis")
 
-    lr_shape = slide4.shapes.add_table(8, 5, Inches(1.0), Inches(1.90), Inches(11.333), Inches(4.35))
+    lr_shape = slide4.shapes.add_table(8, 5, Inches(1.2), Inches(2.15), Inches(10.933), Inches(4.15))
     lr_table = lr_shape.table
     lr_table.columns[0].width = Inches(0.65)
-    lr_table.columns[1].width = Inches(2.20)
-    lr_table.columns[2].width = Inches(1.80)
-    lr_table.columns[3].width = Inches(2.90)
-    lr_table.columns[4].width = Inches(3.78)
+    lr_table.columns[1].width = Inches(2.15)
+    lr_table.columns[2].width = Inches(1.75)
+    lr_table.columns[3].width = Inches(2.75)
+    lr_table.columns[4].width = Inches(3.633)
 
     lr_headers = ["Ref", "Author & Year", "Benchmark / Domain", "Key Methodology", "Identified Gap (Addressed by Sentinel-X)"]
     for j, h in enumerate(lr_headers):
@@ -291,7 +291,7 @@ def build_presentation():
         style_cell(lr_table.cell(i+1, 3), meth, font_size=8.0, text_color=C_BODY, bg_color=bg)
         style_cell(lr_table.cell(i+1, 4), gap, font_size=8.0, text_color=C_RED, bg_color=bg)
 
-    tbox_lr = slide4.shapes.add_textbox(Inches(1.0), Inches(6.40), Inches(11.333), Inches(0.55))
+    tbox_lr = slide4.shapes.add_textbox(Inches(1.2), Inches(6.45), Inches(10.933), Inches(0.55))
     tflr = tbox_lr.text_frame
     tflr.word_wrap = True
     p = tflr.paragraphs[0]
@@ -325,10 +325,10 @@ def build_presentation():
     for idx, (title, desc, stroke, fill_hex) in enumerate(objectives):
         row = idx // 2
         col = idx % 2
-        x = Inches(1.3 + col * 5.5)
-        y = Inches(2.0 + row * 2.05)
+        x = Inches(1.35 + col * 5.45)
+        y = Inches(2.10 + row * 2.00)
 
-        card = slide5.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.2), Inches(1.85))
+        card = slide5.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.2), Inches(1.82))
         card.fill.solid()
         card.fill.fore_color.rgb = C_CARD_BG
         card.line.color.rgb = stroke
@@ -350,7 +350,7 @@ def build_presentation():
         p2.font.color.rgb = C_BODY
         p2.space_before = Pt(6)
 
-    tbox5 = slide5.shapes.add_textbox(Inches(1.3), Inches(6.30), Inches(10.7), Inches(0.60))
+    tbox5 = slide5.shapes.add_textbox(Inches(1.35), Inches(6.35), Inches(10.6), Inches(0.55))
     tf5 = tbox5.text_frame
     tf5.word_wrap = True
     p = tf5.paragraphs[0]
@@ -643,10 +643,10 @@ def build_presentation():
     slide16 = prs.slides.add_slide(blank_layout)
     setup_slide(slide16, "References & Bibliography")
 
-    ref_shape = slide16.shapes.add_table(8, 2, Inches(1.0), Inches(1.90), Inches(11.333), Inches(4.35))
+    ref_shape = slide16.shapes.add_table(8, 2, Inches(1.2), Inches(2.15), Inches(10.933), Inches(4.15))
     ref_table = ref_shape.table
-    ref_table.columns[0].width = Inches(0.85)
-    ref_table.columns[1].width = Inches(10.48)
+    ref_table.columns[0].width = Inches(0.80)
+    ref_table.columns[1].width = Inches(10.133)
 
     style_cell(ref_table.cell(0, 0), "Ref", font_size=9.5, bold=True, text_color=C_WHITE, bg_color=C_NAVY, align=PP_ALIGN.CENTER)
     style_cell(ref_table.cell(0, 1), "Standard Academic Citation (IEEE Format)", font_size=9.5, bold=True, text_color=C_WHITE, bg_color=C_NAVY)
@@ -666,7 +666,7 @@ def build_presentation():
         style_cell(ref_table.cell(i+1, 0), num, font_size=8.8, bold=True, text_color=C_ROYAL, bg_color=bg, align=PP_ALIGN.CENTER)
         style_cell(ref_table.cell(i+1, 1), cite, font_size=8.3, text_color=C_DARK, bg_color=bg)
 
-    tbox16 = slide16.shapes.add_textbox(Inches(1.0), Inches(6.40), Inches(11.333), Inches(0.55))
+    tbox16 = slide16.shapes.add_textbox(Inches(1.2), Inches(6.45), Inches(10.933), Inches(0.55))
     tf16 = tbox16.text_frame
     tf16.word_wrap = True
     p = tf16.paragraphs[0]
