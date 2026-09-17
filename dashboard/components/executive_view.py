@@ -115,3 +115,9 @@ def render_executive_view(
             """,
             unsafe_allow_html=True,
         )
+
+    st.caption(
+        "ℹ️ **Defensive Security Notice**: The predicted behavioral stage reflects multi-task neural network classification "
+        "over aggregated statistical telemetry. It is intended as an automated early-warning indicator to prioritize analyst triage, "
+        "not definitive forensic confirmation of intrusion."
+    )

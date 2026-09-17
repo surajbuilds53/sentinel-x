@@ -18,8 +18,10 @@ def render_attribution_view(
         return
 
     feat_contrib = shap_data.get("feature_contributions", {})
-    drivers = shap_data.get("top_risk_drivers", [])
+    drivers = shap_data.get("top_risk_drivers") or shap_data.get("top_drivers", [])
     inhibitors = shap_data.get("top_risk_inhibitors", [])
+    if not inhibitors and feat_contrib:
+        inhibitors = sorted([(k, v) for k, v in feat_contrib.items() if v < 0], key=lambda x: x[1])
     temporal = shap_data.get("temporal_importance", {})
 
     col1, col2 = st.columns([3, 2])

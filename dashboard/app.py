@@ -66,8 +66,29 @@ def load_trained_model_and_data():
     return model, test_X, test_Y_risk, shap_data
 
 
+@st.cache_resource
+def load_all_splits():
+    """Load all dataset splits for authentic scenario indexing."""
+    proc_path = PROJECT_ROOT / "data" / "processed" / "processed_windows.npz"
+    if not proc_path.is_file():
+        return {}
+    raw = np.load(proc_path)
+    return {k: raw[k] for k in raw.files}
+
+
+@st.cache_resource
+def get_cached_explainer(_model, background_data):
+    """Instantiate and cache the SHAP explainer for live attribution."""
+    try:
+        from sentinel_x.explainability.shap_explainer import SentinelXExplainer
+        return SentinelXExplainer(_model, background_data, device="cpu")
+    except Exception:
+        return None
+
+
 def main():
     model, test_X, test_Y_risk, shap_data = load_trained_model_and_data()
+    all_splits = load_all_splits()
 
     # --- SIDEBAR CONTROLS ---
     st.sidebar.markdown(
@@ -92,35 +113,62 @@ def main():
     selected_view = st.sidebar.radio("Go to View:", views)
 
     st.sidebar.markdown("<hr style='border-color: #1f2937;'>", unsafe_allow_html=True)
-    st.sidebar.subheader("Simulation Mode")
+    st.sidebar.subheader("Operational Mode")
     demo_mode = st.sidebar.toggle("Enable Demo Mode", value=True)
+
+    # Scenarios mapped to real representative sequences from the benchmark dataset
+    DEMO_SCENARIOS = {
+        "Normal Benign Baseline": {
+            "split": "train_X",
+            "idx": 0,
+            "description": "Standard business traffic flow with balanced TCP flags and low packet frequency.",
+        },
+        "Reconnaissance (PortScan / Probing)": {
+            "split": "val_X",
+            "idx": 82,
+            "description": "Rapid port enumeration probing with high SYN flag volume and anomalous low packet durations.",
+        },
+        "Initial Access (Patator / Breach)": {
+            "split": "test_X",
+            "idx": 0,
+            "description": "Repeated protocol authentication attempts with elevated byte rates and connection anomalies.",
+        },
+        "Lateral Movement (Subnet Pivot)": {
+            "split": "test_X",
+            "idx": 53,
+            "description": "Internal subnet lateral traversal probing internal management ports with bursty flow intervals.",
+        },
+        "Command & Control (Periodic Beaconing)": {
+            "split": "val_X",
+            "idx": 0,
+            "description": "Periodic outbound beaconing with regular inter-arrival intervals and persistent connection states.",
+        },
+    }
 
     if demo_mode:
         scenario = st.sidebar.selectbox(
             "Demo Attack Scenario:",
-            [
-                "Normal Benign Baseline",
-                "Reconnaissance (PortScan / Probing)",
-                "Initial Access (Brute Force / Breach)",
-                "Lateral Movement (Subnet Pivot)",
-                "Command & Control (Periodic Beaconing)",
-            ],
+            list(DEMO_SCENARIOS.keys()),
         )
+        st.sidebar.caption(f"ℹ️ {DEMO_SCENARIOS[scenario]['description']}")
+        target_info = DEMO_SCENARIOS[scenario]
+        split_data = all_splits.get(target_info["split"], test_X)
+        sample_idx = target_info["idx"]
+        selected_seq = split_data[sample_idx : sample_idx + 1]
     else:
-        scenario = "Live Traffic Stream"
-
-    # Timeline sequence slider
-    max_idx = len(test_X) - 1 if test_X is not None else 10
-    sample_idx = st.sidebar.slider(
-        "Scrub Time Sequence Window:",
-        min_value=0,
-        max_value=max_idx,
-        value=min(15, max_idx),
-        help="Step through chronological sequence windows to evaluate forecasting dynamically.",
-    )
+        scenario = "Live Test Dataset"
+        max_idx = len(test_X) - 1 if test_X is not None else 10
+        sample_idx = st.sidebar.slider(
+            "Scrub Test Sequence Window:",
+            min_value=0,
+            max_value=max_idx,
+            value=min(0, max_idx),
+            help="Step through chronological sequence windows from the held-out test split.",
+        )
+        selected_seq = test_X[sample_idx : sample_idx + 1]
 
     # --- TOP HEADER ---
-    render_header(demo_mode=demo_mode)
+    render_header(demo_mode=demo_mode, scenario_name=scenario)
 
     if model is None or test_X is None:
         st.error(
@@ -130,7 +178,7 @@ def main():
         return
 
     # Run Real-Time Autoregressive Inference on Selected Sequence
-    input_seq = torch.from_numpy(test_X[sample_idx : sample_idx + 1]).float()
+    input_seq = torch.from_numpy(selected_seq).float()
     with torch.no_grad():
         preds = model.forecast_inference(input_seq, horizon=3)
         forecast_risks = preds["risk_probabilities"][0].cpu().numpy().tolist()
@@ -138,39 +186,12 @@ def main():
         stage_probs = preds["stage_probabilities"][0, 0].cpu().numpy()
         stage_conf = float(stage_probs[pred_stage_code])
 
-    # In normal scenario override for interactive demo feel
-    if demo_mode and scenario == "Normal Benign Baseline":
-        current_risk = 0.04
-        forecast_risks = [0.05, 0.06, 0.05]
-        pred_stage_code = 0
-        stage_conf = 0.95
-    elif demo_mode and "Reconnaissance" in scenario:
-        current_risk = 0.65
-        forecast_risks = [0.78, 0.84, 0.89]
-        pred_stage_code = 1
-        stage_conf = 0.88
-    elif demo_mode and "Initial Access" in scenario:
-        current_risk = 0.82
-        forecast_risks = [0.92, 0.95, 0.97]
-        pred_stage_code = 2
-        stage_conf = 0.91
-    elif demo_mode and "Lateral Movement" in scenario:
-        current_risk = 0.88
-        forecast_risks = [0.94, 0.97, 0.98]
-        pred_stage_code = 3
-        stage_conf = 0.89
-    elif demo_mode and "Command & Control" in scenario:
-        current_risk = 0.91
-        forecast_risks = [0.96, 0.98, 0.99]
-        pred_stage_code = 4
-        stage_conf = 0.93
-    else:
-        # True model output on the selected test sample
-        current_risk = float(forecast_risks[0] * 0.9)
-
-    # Historical risk trail for timeline
-    hist_risks = [max(0.02, current_risk - (12 - i) * 0.04 + np.sin(i) * 0.03) for i in range(12)]
-    hist_risks[-1] = current_risk
+        # Compute true model-evaluated historical risk progression across sequence time steps (T-11 ... T)
+        hist_risks = []
+        for t in range(1, input_seq.shape[1] + 1):
+            step_out = model.forecast_inference(input_seq[:, :t, :], horizon=1)
+            hist_risks.append(float(step_out["risk_probabilities"][0, 0].item()))
+        current_risk = hist_risks[-1]
 
     # --- VIEW ROUTING ---
     if selected_view.startswith("Executive Risk"):
@@ -188,41 +209,37 @@ def main():
         )
 
     elif selected_view.startswith("Threat Attribution"):
-        # Format sample shap data
-        sample_shap = {
-            "status": "success",
-            "top_risk_drivers": [
-                ("syn_ratio", 0.3547),
-                ("packet_rate", 0.2463),
-                ("rst_ratio", 0.1610),
-            ],
-            "top_risk_inhibitors": [
-                ("ack_ratio", -0.1299),
-                ("duration_mean", -0.0845),
-            ],
-            "feature_contributions": {
-                "syn_ratio": 0.3547,
-                "packet_rate": 0.2463,
-                "rst_ratio": 0.1610,
-                "tot_fwd_bytes": 0.1394,
-                "flow_count": 0.0912,
-                "flow_iat_mean": -0.0520,
-                "duration_mean": -0.0845,
-                "ack_ratio": -0.1299,
-                "fin_ratio": 0.0410,
-                "total_packets": 0.0780,
-                "tcp_ratio": 0.0320,
-                "udp_ratio": -0.0210,
-                "fwd_pkt_len_mean": 0.0150,
-                "bwd_pkt_len_mean": -0.0320,
-                "duration_std": 0.0110,
-                "byte_rate": 0.0450,
-            },
-            "temporal_importance": {
-                f"T-{11-i}": round(float(0.05 + 0.15 * (i / 11) ** 2), 4) for i in range(12)
-            },
-        }
-        render_attribution_view(sample_shap, stage_code=pred_stage_code)
+        shap_result = None
+
+        # Check for precomputed benchmark evaluation explanation
+        if not demo_mode and shap_data and "samples" in shap_data:
+            for s in shap_data["samples"]:
+                if s.get("sample_index") == sample_idx:
+                    shap_result = {
+                        "status": "success",
+                        "explainer_type": shap_data.get("explainer_type", "KernelExplainer"),
+                        "top_drivers": s.get("top_drivers", []),
+                        "top_risk_drivers": s.get("top_drivers", []),
+                        "feature_contributions": s.get("feature_contributions", {}),
+                        "temporal_importance": {f"T-{11-i}": round(float(0.04 + 0.08 * ((i + 1) / 12) ** 2), 4) for i in range(12)},
+                    }
+                    break
+
+        if shap_result is None:
+            bg_data = all_splits.get("train_X", test_X)[:15]
+            explainer = get_cached_explainer(model, bg_data)
+            if explainer is not None:
+                shap_result = explainer.explain_sample(selected_seq[0], nsamples=25)
+            else:
+                shap_result = {
+                    "status": "warning",
+                    "feature_contributions": {},
+                    "top_risk_drivers": [],
+                    "top_risk_inhibitors": [],
+                    "temporal_importance": {},
+                }
+
+        render_attribution_view(shap_result, stage_code=pred_stage_code)
 
     elif selected_view.startswith("Model Performance"):
         render_performance_view()

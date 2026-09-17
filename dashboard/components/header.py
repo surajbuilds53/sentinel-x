@@ -1,63 +1,84 @@
-"""SOC Dashboard Header and Styling Component."""
+"""Dashboard Header and Style Component for Sentinel-X."""
 
 import streamlit as st
 from datetime import datetime
 
 
 def apply_custom_soc_styles():
-    """Inject SOC dark theme styles with neon accents."""
+    """Apply clean, restrained CSS styles suitable for an academic B.Tech project."""
     st.markdown(
         """
         <style>
         .stApp {
             background-color: #0b0f19;
-            color: #f3f4f6;
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        .soc-header {
-            background: linear-gradient(90deg, #111827 0%, #1e293b 100%);
-            border: 1px solid #1e293b;
-            border-radius: 10px;
-            padding: 1.2rem 1.5rem;
+        .header-container {
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 1rem;
             margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        .metric-box {
+        .project-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+        .project-subtitle {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+        .mode-badge-demo {
+            display: inline-block;
+            background: #451a03;
+            color: #f59e0b;
+            border: 1px solid #78350f;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .mode-badge-model {
+            display: inline-block;
+            background: #064e3b;
+            color: #34d399;
+            border: 1px solid #065f46;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .stat-card {
             background: #111827;
             border: 1px solid #1f2937;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
+            border-radius: 6px;
+            padding: 0.85rem 1rem;
+            text-align: left;
         }
-        .metric-title {
-            font-size: 0.8rem;
-            color: #9ca3af;
+        .stat-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
-        .metric-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 0.25rem 0;
-        }
-        .badge-synthetic {
-            background: rgba(245, 158, 11, 0.15);
-            color: #fbbf24;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
+        .stat-value {
+            font-size: 1.5rem;
             font-weight: 600;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f8fafc;
+            margin-top: 0.2rem;
         }
-        .badge-live {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            padding: 3px 8px;
-            border-radius: 4px;
+        .disclaimer-note {
             font-size: 0.75rem;
-            font-weight: 600;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #64748b;
+            margin-top: 0.5rem;
+            font-style: italic;
         }
         </style>
         """,
@@ -65,35 +86,38 @@ def apply_custom_soc_styles():
     )
 
 
-def render_header(demo_mode: bool = True):
+def render_header(demo_mode: bool = True, scenario_name: str = ""):
+    """Render top header bar with mode badges and system status."""
     apply_custom_soc_styles()
-    col1, col2 = st.columns([3, 1])
-    with col1:
+    
+    col_left, col_right = st.columns([3, 1])
+    
+    with col_left:
         st.markdown(
             f"""
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <h1 style="margin: 0; font-size: 1.8rem; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                    SENTINEL-X SOC
-                </h1>
-                <span class="{'badge-synthetic' if demo_mode else 'badge-live'}">
-                    {'DEMO / SYNTHETIC DATA' if demo_mode else 'LIVE CIC-IDS DATA'}
-                </span>
-            </div>
-            <p style="margin: 4px 0 0 0; color: #9ca3af; font-size: 0.85rem;">
-                Defensive Network Attack Forecasting System &bull; SIH26153 B.Tech Minor Project
-            </p>
-            """,
-            unsafe_allow_html=True,
-        )
-    with col2:
-        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        st.markdown(
-            f"""
-            <div style="text-align: right; color: #6b7280; font-size: 0.8rem; margin-top: 8px;">
-                <div>STATUS: <span style="color: #10b981; font-weight: 600;">ACTIVE DEFENSE</span></div>
-                <div>LOCAL TIME: {now_str}</div>
+            <div class="header-container">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="project-title">Sentinel-X</span>
+                    <span class="{'mode-badge-demo' if demo_mode else 'mode-badge-model'}">
+                        {'Demo Mode — Synthetic Traffic' if demo_mode else 'Model Mode — Test Dataset'}
+                    </span>
+                </div>
+                <div class="project-subtitle">
+                    AI-Based Network Attack Forecasting from Network Traffic Data &bull; SIH26153 B.Tech Minor Project
+                </div>
             </div>
             """,
             unsafe_allow_html=True,
         )
-    st.markdown("<hr style='border-color: #1f2937; margin: 1rem 0 1.5rem 0;'>", unsafe_allow_html=True)
+        
+    with col_right:
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+        st.markdown(
+            f"""
+            <div style="text-align: right; color: #64748b; font-size: 0.8rem; padding-top: 0.25rem;">
+                <div>Execution: <strong style="color: #94a3b8;">Local / Offline</strong></div>
+                <div>System Clock: <span style="color: #cbd5e1;">{now_str}</span></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
