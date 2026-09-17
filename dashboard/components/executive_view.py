@@ -39,8 +39,8 @@ def create_risk_gauge(risk_value: float, title: str = "Forecasted Risk (T+1)") -
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font={"color": "#f3f4f6"},
-        height=220,
-        margin=dict(l=20, r=20, t=30, b=20),
+        height=240,
+        margin=dict(l=25, r=25, t=45, b=15),
     )
     return fig
 
