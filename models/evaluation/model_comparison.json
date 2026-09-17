@@ -1,0 +1,50 @@
+{
+  "summary_table": [
+    {
+      "Model": "Baseline Logistic Regression (Static)",
+      "Forecast Horizon": "Static (T)",
+      "Risk Precision": 0.9886,
+      "Risk Recall": 0.9775,
+      "Risk F1-Score": 0.9831,
+      "False Positive Rate": 0.2,
+      "Stage Accuracy": null,
+      "State Forecast MAE": null
+    },
+    {
+      "Model": "LSTM World Model (Deep Recurrent)",
+      "Forecast Horizon": "T+1",
+      "Risk Precision": 0.9674,
+      "Risk Recall": 1.0,
+      "Risk F1-Score": 0.9834,
+      "False Positive Rate": 0.6,
+      "Stage Accuracy": 0.6277,
+      "State Forecast MAE": 0.8538
+    },
+    {
+      "Model": "LSTM World Model (Deep Recurrent)",
+      "Forecast Horizon": "T+2",
+      "Risk Precision": 0.9565,
+      "Risk Recall": 1.0,
+      "Risk F1-Score": 0.9778,
+      "False Positive Rate": 0.6667,
+      "Stage Accuracy": 0.617,
+      "State Forecast MAE": 0.8645
+    },
+    {
+      "Model": "LSTM World Model (Deep Recurrent)",
+      "Forecast Horizon": "T+3",
+      "Risk Precision": 0.9457,
+      "Risk Recall": 1.0,
+      "Risk F1-Score": 0.9721,
+      "False Positive Rate": 0.7143,
+      "Stage Accuracy": 0.6064,
+      "State Forecast MAE": 0.882
+    }
+  ],
+  "key_findings": {
+    "recall_advantage": 0.0225,
+    "fpr_improvement": -0.4,
+    "multi_stage_capability": "Supported exclusively by LSTM World Model (5-stage MITRE taxonomy)",
+    "multi_step_trajectory": "Supported exclusively by LSTM World Model (T+1, T+2, T+3 autoregressive rollout)"
+  }
+}

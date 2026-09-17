@@ -1,0 +1,5 @@
+Model,Forecast Horizon,Risk Precision,Risk Recall,Risk F1-Score,False Positive Rate,Stage Accuracy,State Forecast MAE
+Baseline Logistic Regression (Static),Static (T),0.9886,0.9775,0.9831,0.2,,
+LSTM World Model (Deep Recurrent),T+1,0.9674,1.0,0.9834,0.6,0.6277,0.8538
+LSTM World Model (Deep Recurrent),T+2,0.9565,1.0,0.9778,0.6667,0.617,0.8645
+LSTM World Model (Deep Recurrent),T+3,0.9457,1.0,0.9721,0.7143,0.6064,0.882
